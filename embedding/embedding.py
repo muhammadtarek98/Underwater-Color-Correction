@@ -5,7 +5,6 @@
 
 '''
 
-import cPickle as pickle
 import tensorflow as tf
 from scipy import misc
 from tqdm import tqdm
@@ -18,12 +17,12 @@ import os
 import time
 import time
 import glob
-import cPickle as pickle
+import pickle
 from tqdm import tqdm
 
 sys.path.insert(0, '../ops/')
 sys.path.insert(0, '../nets/')
-from tf_ops import *
+from .ops.tf_ops import *
 
 import data_ops
 
@@ -55,16 +54,15 @@ if __name__ == '__main__':
 
    IMAGES_DIR     = EXPERIMENT_DIR+'test_images/'
 
-   print
-   print 'LEARNING_RATE: ',LEARNING_RATE
-   print 'LOSS_METHOD:   ',LOSS_METHOD
-   print 'BATCH_SIZE:    ',BATCH_SIZE
-   print 'L1_WEIGHT:     ',L1_WEIGHT
-   print 'IG_WEIGHT:     ',IG_WEIGHT
-   print 'NETWORK:       ',NETWORK
-   print 'EPOCHS:        ',EPOCHS
-   print 'DATA:          ',DATA
-   print
+   print ('LEARNING_RATE: ',LEARNING_RATE)
+   print ('LOSS_METHOD:   ',LOSS_METHOD)
+   print ('BATCH_SIZE:    ',BATCH_SIZE)
+   print ('L1_WEIGHT:     ',L1_WEIGHT)
+   print ('IG_WEIGHT:     ',IG_WEIGHT)
+   print ('NETWORK:       ',NETWORK)
+   print ('EPOCHS:        ',EPOCHS)
+   print ('DATA:          ',DATA)
+
 
    if NETWORK == 'pix2pix': from pix2pix import *
    if NETWORK == 'resnet':  from resnet import *

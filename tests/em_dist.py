@@ -1,6 +1,4 @@
-#Import OpenCv library
-from cv2 import *
-
+import cv2 as cv
 ### HISTOGRAM FUNCTION #########################################################
 def calcHistogram(src):
     # Convert to HSV
@@ -42,42 +40,35 @@ def calcHistogram(src):
 
 ### EARTH MOVERS ############################################################
 def calcEM(hist1,hist2,h_bins,s_bins):
+    #Define number of rows
+    numRows = h_bins*s_bins
+    sig1 = cv.CreateMat(numRows, 3, cv.CV_32FC1)
+    sig2 = cv.CreateMat(numRows, 3, cv.CV_32FC1)
+    for h in range(h_bins):
+        for s in range(s_bins):
+            bin_val = cv.QueryHistValue_2D(hist1, h, s)
+            cv.Set2D(sig1, h*s_bins+s, 0, cv.Scalar(bin_val))
+            cv.Set2D(sig1, h*s_bins+s, 1, cv.Scalar(h))
+            cv.Set2D(sig1, h*s_bins+s, 2, cv.Scalar(s))
 
-#Define number of rows
-numRows = h_bins*s_bins
+            bin_val = cv.QueryHistValue_2D(hist2, h, s)
+            cv.Set2D(sig2, h*s_bins+s, 0, cv.Scalar(bin_val))
+            cv.Set2D(sig2, h*s_bins+s, 1, cv.Scalar(h))
+            cv.Set2D(sig2, h*s_bins+s, 2, cv.Scalar(s))
 
-sig1 = cv.CreateMat(numRows, 3, cv.CV_32FC1)
-sig2 = cv.CreateMat(numRows, 3, cv.CV_32FC1)    
-
-for h in range(h_bins):
-    for s in range(s_bins): 
-        bin_val = cv.QueryHistValue_2D(hist1, h, s)
-        cv.Set2D(sig1, h*s_bins+s, 0, cv.Scalar(bin_val))
-        cv.Set2D(sig1, h*s_bins+s, 1, cv.Scalar(h))
-        cv.Set2D(sig1, h*s_bins+s, 2, cv.Scalar(s))
-
-        bin_val = cv.QueryHistValue_2D(hist2, h, s)
-        cv.Set2D(sig2, h*s_bins+s, 0, cv.Scalar(bin_val))
-        cv.Set2D(sig2, h*s_bins+s, 1, cv.Scalar(h))
-        cv.Set2D(sig2, h*s_bins+s, 2, cv.Scalar(s))
-
-#This is the important line were the OpenCV EM algorithm is called
-return cv.CalcEMD2(sig1,sig2,cv.CV_DIST_L2)
+    #This is the important line were the OpenCV EM algorithm is called
+    return cv.CalcEMD2(sig1,sig2,cv.CV_DIST_L2)
 
 ### MAIN ########################################################################
 if __name__=="__main__":
     #Load image 1
     src1 = cv.LoadImage()
-
     #Load image 1
     src2 = cv.LoadImage("image2.jpg")
-
     # Get histograms
     histSrc1= calcHistogram(src1)
     histSrc2= calcHistogram(src2)
-
     # Compare histograms using earth mover's
     histComp = calcEM(histSrc1,histSrc2,30,32)
-
     #Print solution
     print(histComp)

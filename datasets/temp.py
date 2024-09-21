@@ -12,7 +12,7 @@ for b in trainb_:
 for a in traina:
    a = ntpath.basename(a)
    if a not in trainb:
-      print a
+      print (a)
       os.remove('trainA/'+a)
 
 

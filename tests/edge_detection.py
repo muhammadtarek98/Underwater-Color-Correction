@@ -72,11 +72,10 @@ for r,c,u0,u1 in tqdm(zip(real_paths, cgan_paths, ugan_0_paths, ugan_1_paths)):
 
    if save == 1:
 
-      print image_name
-      print 'cgan:   ',np.linalg.norm(edges-cedges)
-      print 'ugan_0: ',np.linalg.norm(edges-u0edges)
-      print 'ugan_1: ',np.linalg.norm(edges-u1edges)
-      print
+      print (image_name)
+      print ('cgan:   ',np.linalg.norm(edges-cedges))
+      print ('ugan_0: ',np.linalg.norm(edges-u0edges))
+      print ('ugan_1: ',np.linalg.norm(edges-u1edges))
 
       # save a bunch of images for paper
       # original images
@@ -102,12 +101,9 @@ for r,c,u0,u1 in tqdm(zip(real_paths, cgan_paths, ugan_0_paths, ugan_1_paths)):
       i += 1
 
 results_file.close()
-print 'done'
+print ('done')
 
-print np.mean(cgan_dist)
-print np.mean(ugan_0_dist)
-print np.mean(ugan_1_dist)
-
-exit()
-
+print (np.mean(cgan_dist))
+print (np.mean(ugan_0_dist))
+print (np.mean(ugan_1_dist))
 

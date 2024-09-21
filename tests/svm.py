@@ -7,8 +7,9 @@
 
 '''
 
-import cPickle as pickle
+import pickle
 import tensorflow as tf
+from pygments.lexers import tcl
 from scipy import misc
 from tqdm import tqdm
 import numpy as np
@@ -19,17 +20,15 @@ import sys
 import os
 import time
 import glob
-import cPickle as pickle
 from tqdm import tqdm
 
-sys.path.insert(0, 'ops/')
-sys.path.insert(0, 'nets/')
-from tf_ops import *
-import data_ops
+from Underwater_Color_Correction.ops.tf_ops import *
+from Underwater_Color_Correction.ops.data_ops import *
+
 
 def netD_feature(x, LAYER_NORM, LOSS_METHOD, reuse=False):
-   print
-   print 'netD'
+
+   print ('netD')
 
    sc = tf.get_variable_scope()
    with tf.variable_scope(sc, reuse=reuse):
@@ -77,12 +76,12 @@ def netD_feature(x, LAYER_NORM, LOSS_METHOD, reuse=False):
       conv5 = tcl.max_pool2d(conv5, [4,4], stride=2, padding='SAME')
       conv5 = tcl.max_pool2d(conv5, [4,4], stride=2, padding='SAME')
 
-      print 'conv1:',conv1
-      print 'conv2:',conv2
-      print 'conv3:',conv3
-      print 'conv4:',conv4
-      print 'conv5:',conv5
-      print
+      print ('conv1:',conv1)
+      print ('conv2:',conv2)
+      print ('conv3:',conv3)
+      print ('conv4:',conv4)
+      print ('conv5:',conv5)
+
       
       # flatten all and concatenate
       conv1 = tcl.flatten(conv1)
@@ -90,21 +89,21 @@ def netD_feature(x, LAYER_NORM, LOSS_METHOD, reuse=False):
       conv3 = tcl.flatten(conv3)
       conv4 = tcl.flatten(conv4)
       conv5 = tcl.flatten(conv5)
-      print 'conv1:',conv1
-      print 'conv2:',conv2
-      print 'conv3:',conv3
-      print 'conv4:',conv4
-      print 'conv5:',conv5
+      print ('conv1:',conv1)
+      print ('conv2:',conv2)
+      print ('conv3:',conv3)
+      print ('conv4:',conv4)
+      print ('conv5:',conv5)
 
       feature_vector = tf.squeeze(tf.concat([conv1, conv2, conv3, conv4, conv5], axis=1))
-      print 'feature_vector:',feature_vector
+      print ('feature_vector:',feature_vector)
 
       return feature_vector
 
 if __name__ == '__main__':
 
    if len(sys.argv) < 2:
-      print 'You must provide an info.pkl file'
+      print ('You must provide an info.pkl file')
       exit()
 
    pkl_file = open(sys.argv[1], 'rb')
@@ -127,14 +126,13 @@ if __name__ == '__main__':
                      +'/IG_WEIGHT_'+str(IG_WEIGHT)\
                      +'/DATA_'+DATA+'/'\
 
-   print
-   print 'LEARNING_RATE: ',LEARNING_RATE
-   print 'LOSS_METHOD:   ',LOSS_METHOD
-   print 'BATCH_SIZE:    ',BATCH_SIZE
-   print 'NETWORK:       ',NETWORK
-   print 'EPOCHS:        ',EPOCHS
-   print 'LAYER_NORM:    ',LAYER_NORM
-   print
+
+   print ('LEARNING_RATE: ',LEARNING_RATE)
+   print ('LOSS_METHOD:   ',LOSS_METHOD)
+   print ('BATCH_SIZE:    ',BATCH_SIZE)
+   print ('NETWORK:       ',NETWORK)
+   print ('EPOCHS:        ',EPOCHS)
+   print ('LAYER_NORM:    ',LAYER_NORM)
 
    if NETWORK == 'pix2pix': from pix2pix import *
    if NETWORK == 'resnet':  from resnet import *

@@ -7,7 +7,7 @@ import scipy.misc as misc
 
 sys.path.insert(0, 'ops/')
 sys.path.insert(0, 'nets/')
-from tf_ops import *
+from ops.tf_ops import *
 
 def put_kernels_on_grid (kernel, pad = 1):
 

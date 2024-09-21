@@ -12,5 +12,5 @@ for i in image_files:
    classes.append(img)
 
 
-print len(set(classes))
+print (len(set(classes)))
 

@@ -197,7 +197,7 @@ class cyclegan(object):
         #print checkpoint_dir
 
         ckpt = tf.train.get_checkpoint_state(checkpoint_dir)
-        print ckpt
+        print (ckpt)
         if ckpt and ckpt.model_checkpoint_path:
             ckpt_name = os.path.basename(ckpt.model_checkpoint_path)
             self.saver.restore(self.sess, os.path.join(checkpoint_dir, ckpt_name))
@@ -235,8 +235,7 @@ class cyclegan(object):
         else:
             raise Exception('--which_direction must be AtoB or BtoA')
 
-        print
-        print args.checkpoint_dir
+        print( args.checkpoint_dir)
         if self.load(args.checkpoint_dir):
             print(" [*] Load SUCCESS")
         else:

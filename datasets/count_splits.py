@@ -10,6 +10,6 @@ for i in images:
    classes.append(i)
 
 
-print set(classes)
+print (set(classes))
 
 
