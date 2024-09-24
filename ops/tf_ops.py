@@ -88,7 +88,7 @@ def bn(x):
 def ln(x, s, b, epsilon = 1e-5):
    m, v = tf.nn.moments(x, [1], keep_dims=True)
    normalized_input = (x - m) / tf.sqrt(v + epsilon)
-   return normalised_input * s + b
+   return normalized_input * s + b
 
 
 '''
@@ -108,7 +108,7 @@ def instance_norm(x, epsilon=1e-5):
 '''
 def upconv2d(x, filters, name=None, new_height=None, new_width=None, kernel_size=3):
 
-   print 'x:',x
+   print ('x:',x)
    shapes = x.get_shape().as_list()
    height = shapes[1]
    width  = shapes[2]

@@ -1,6 +1,6 @@
 import tensorflow as tf
 import sys
-import cPickle as pickle
+import pickle
 import numpy as np
 from math import sqrt
 import scipy.misc as misc
@@ -40,9 +40,9 @@ def put_kernels_on_grid (kernel, pad = 1):
   X = kernel.get_shape()[1] + 2 * pad
 
   channels = kernel.get_shape()[2]
-  print 'Y:',Y
-  print 'X:',X
-  print 'channels:',channels
+  print( 'Y:',Y)
+  print ('X:',X)
+  print ('channels:',channels)
 
   # put NumKernels to the 1st dimension
   x = tf.transpose(x, (3, 0, 1, 2))
@@ -68,7 +68,7 @@ def put_kernels_on_grid (kernel, pad = 1):
 if __name__ == '__main__':
 
    if len(sys.argv) < 2:
-      print 'You must provide an info.pkl file'
+      print ('You must provide an info.pkl file')
       exit()
 
    pkl_file = open(sys.argv[1], 'rb')
@@ -91,8 +91,8 @@ if __name__ == '__main__':
                      +'/AUGMENT_'+str(AUGMENT)\
                      +'/DATA_'+DATA+'/'\
 
-   if NETWORK == 'pix2pix': from pix2pix import *
-   if NETWORK == 'resnet':  from resnet import *
+   if NETWORK == 'pix2pix': from nets.pix2pix import *
+   if NETWORK == 'resnet':  from nets.resnet import *
 
    image_u = tf.placeholder(tf.float32, shape=(1, 256, 256, 3), name='image_u')
    layers    = netG_encoder(image_u)
@@ -106,12 +106,12 @@ if __name__ == '__main__':
 
    ckpt = tf.train.get_checkpoint_state(EXPERIMENT_DIR)
    if ckpt and ckpt.model_checkpoint_path:
-      print "Restoring previous model..."
+      print ("Restoring previous model...")
       try:
          saver.restore(sess, ckpt.model_checkpoint_path)
-         print "Model restored"
+         print ("Model restored")
       except:
-         print "Could not restore model"
+         print ("Could not restore model")
          pass
 
 
